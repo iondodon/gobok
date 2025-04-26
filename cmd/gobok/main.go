@@ -32,6 +32,7 @@ type FieldData struct {
 type FolderData struct {
 	PackageName string
 	Builders    []BuilderData
+	Imports     map[string]bool // Track required imports
 }
 
 var folders = make(map[string]*FolderData)
@@ -89,6 +90,7 @@ func processFile(path string) {
 	if folders[folder] == nil {
 		folders[folder] = &FolderData{
 			PackageName: node.Name.Name,
+			Imports:     make(map[string]bool),
 		}
 	}
 
@@ -136,10 +138,16 @@ func processFile(path string) {
 
 		for _, field := range structType.Fields.List {
 			for _, name := range field.Names {
+				fieldType := exprToString(field.Type)
 				builder.Fields = append(builder.Fields, FieldData{
 					Name: name.Name,
-					Type: exprToString(field.Type),
+					Type: fieldType,
 				})
+
+				// Track required imports
+				if strings.Contains(fieldType, "time.Time") {
+					folders[folder].Imports["time"] = true
+				}
 			}
 		}
 
@@ -158,12 +166,20 @@ func writeBuilders(folder string, data *FolderData) {
 		PackageName string
 		Builders    []BuilderData
 		ToolVersion string
+		Imports     []string
+	}
+
+	// Convert imports map to sorted slice
+	imports := make([]string, 0, len(data.Imports))
+	for imp := range data.Imports {
+		imports = append(imports, imp)
 	}
 
 	outData := TemplateData{
 		PackageName: data.PackageName,
 		Builders:    data.Builders,
 		ToolVersion: toolVersion,
+		Imports:     imports,
 	}
 
 	var buf strings.Builder

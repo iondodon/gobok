@@ -2,32 +2,35 @@
 
 package {{ .PackageName }}
 
+{{ if .Imports }}
+import (
+	{{ range .Imports }}"{{ . }}"
+	{{ end }}
+)
+{{ end }}
+
 {{ range .Builders }}
 {{ if .GenerateBuilder }}
 {{ $structName := .StructName }}
 type {{ $structName }}Builder struct {
-{{- range .Fields }}
-	{{ .Name }} {{ .Type }}
-{{- end }}
+	instance {{ $structName }}
 }
 
 func New{{ $structName }}Builder() *{{ $structName }}Builder {
-	return &{{ $structName }}Builder{}
+	return &{{ $structName }}Builder{
+		instance: {{ $structName }}{},
+	}
 }
 
 {{ range .Fields }}
 func (b *{{ $structName }}Builder) Set{{ .Name }}(v {{ .Type }}) *{{ $structName }}Builder {
-	b.{{ .Name }} = v
+	b.instance.{{ .Name }} = v
 	return b
 }
 {{- end }}
 
 func (b *{{ $structName }}Builder) Build() *{{ $structName }} {
-	return &{{ $structName }}{
-{{- range .Fields }}
-		{{ .Name }}: b.{{ .Name }},
-{{- end }}
-	}
+	return &b.instance
 }
 {{ end }}
 
