@@ -7,330 +7,395 @@ import (
 )
 
 type AllTypesBuilder struct {
-	instance AllTypes
+	instance *AllTypes
 }
 
 func NewAllTypesBuilder() *AllTypesBuilder {
 	return &AllTypesBuilder{
-		instance: AllTypes{},
+		instance: &AllTypes{},
 	}
 }
 
-func (b *AllTypesBuilder) SetBoolValue(v bool) *AllTypesBuilder {
+func (b *AllTypesBuilder) BoolValue(v bool) *AllTypesBuilder {
 	b.instance.BoolValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetIntValue(v int) *AllTypesBuilder {
+func (b *AllTypesBuilder) IntValue(v int) *AllTypesBuilder {
 	b.instance.IntValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetInt8Value(v int8) *AllTypesBuilder {
+func (b *AllTypesBuilder) Int8Value(v int8) *AllTypesBuilder {
 	b.instance.Int8Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetInt16Value(v int16) *AllTypesBuilder {
+func (b *AllTypesBuilder) Int16Value(v int16) *AllTypesBuilder {
 	b.instance.Int16Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetInt32Value(v int32) *AllTypesBuilder {
+func (b *AllTypesBuilder) Int32Value(v int32) *AllTypesBuilder {
 	b.instance.Int32Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetInt64Value(v int64) *AllTypesBuilder {
+func (b *AllTypesBuilder) Int64Value(v int64) *AllTypesBuilder {
 	b.instance.Int64Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetUintValue(v uint) *AllTypesBuilder {
+func (b *AllTypesBuilder) UintValue(v uint) *AllTypesBuilder {
 	b.instance.UintValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetUint8Value(v uint8) *AllTypesBuilder {
+func (b *AllTypesBuilder) Uint8Value(v uint8) *AllTypesBuilder {
 	b.instance.Uint8Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetUint16Value(v uint16) *AllTypesBuilder {
+func (b *AllTypesBuilder) Uint16Value(v uint16) *AllTypesBuilder {
 	b.instance.Uint16Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetUint32Value(v uint32) *AllTypesBuilder {
+func (b *AllTypesBuilder) Uint32Value(v uint32) *AllTypesBuilder {
 	b.instance.Uint32Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetUint64Value(v uint64) *AllTypesBuilder {
+func (b *AllTypesBuilder) Uint64Value(v uint64) *AllTypesBuilder {
 	b.instance.Uint64Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetFloat32Value(v float32) *AllTypesBuilder {
+func (b *AllTypesBuilder) Float32Value(v float32) *AllTypesBuilder {
 	b.instance.Float32Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetFloat64Value(v float64) *AllTypesBuilder {
+func (b *AllTypesBuilder) Float64Value(v float64) *AllTypesBuilder {
 	b.instance.Float64Value = v
 	return b
 }
-func (b *AllTypesBuilder) SetStringValue(v string) *AllTypesBuilder {
+func (b *AllTypesBuilder) StringValue(v string) *AllTypesBuilder {
 	b.instance.StringValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetByteValue(v byte) *AllTypesBuilder {
+func (b *AllTypesBuilder) ByteValue(v byte) *AllTypesBuilder {
 	b.instance.ByteValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetRuneValue(v rune) *AllTypesBuilder {
+func (b *AllTypesBuilder) RuneValue(v rune) *AllTypesBuilder {
 	b.instance.RuneValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetBoolPtr(v *bool) *AllTypesBuilder {
+func (b *AllTypesBuilder) BoolPtr(v *bool) *AllTypesBuilder {
 	b.instance.BoolPtr = v
 	return b
 }
-func (b *AllTypesBuilder) SetIntPtr(v *int) *AllTypesBuilder {
+func (b *AllTypesBuilder) IntPtr(v *int) *AllTypesBuilder {
 	b.instance.IntPtr = v
 	return b
 }
-func (b *AllTypesBuilder) SetStringPtr(v *string) *AllTypesBuilder {
+func (b *AllTypesBuilder) StringPtr(v *string) *AllTypesBuilder {
 	b.instance.StringPtr = v
 	return b
 }
-func (b *AllTypesBuilder) SetStructPtr(v *NestedStruct) *AllTypesBuilder {
+func (b *AllTypesBuilder) StructPtr(v *NestedStruct) *AllTypesBuilder {
 	b.instance.StructPtr = v
 	return b
 }
-func (b *AllTypesBuilder) SetTimeValue(v time.Time) *AllTypesBuilder {
+func (b *AllTypesBuilder) TimeValue(v time.Time) *AllTypesBuilder {
 	b.instance.TimeValue = v
 	return b
 }
-func (b *AllTypesBuilder) SetIntArray(v []int) *AllTypesBuilder {
+func (b *AllTypesBuilder) IntArray(v []int) *AllTypesBuilder {
 	b.instance.IntArray = v
 	return b
 }
-func (b *AllTypesBuilder) SetStringArray(v []string) *AllTypesBuilder {
+func (b *AllTypesBuilder) StringArray(v []string) *AllTypesBuilder {
 	b.instance.StringArray = v
 	return b
 }
-func (b *AllTypesBuilder) SetStructArray(v []NestedStruct) *AllTypesBuilder {
+func (b *AllTypesBuilder) StructArray(v []NestedStruct) *AllTypesBuilder {
 	b.instance.StructArray = v
 	return b
 }
-func (b *AllTypesBuilder) SetSimpleMap(v map[string]int) *AllTypesBuilder {
+func (b *AllTypesBuilder) SimpleMap(v map[string]int) *AllTypesBuilder {
 	b.instance.SimpleMap = v
 	return b
 }
-func (b *AllTypesBuilder) SetComplexMap(v map[string]map[int]string) *AllTypesBuilder {
+func (b *AllTypesBuilder) ComplexMap(v map[string]map[int]string) *AllTypesBuilder {
 	b.instance.ComplexMap = v
 	return b
 }
-func (b *AllTypesBuilder) SetInterfaceMap(v map[string]interface{}) *AllTypesBuilder {
+func (b *AllTypesBuilder) InterfaceMap(v map[string]interface{}) *AllTypesBuilder {
 	b.instance.InterfaceMap = v
 	return b
 }
-func (b *AllTypesBuilder) SetStructMap(v map[string]NestedStruct) *AllTypesBuilder {
+func (b *AllTypesBuilder) StructMap(v map[string]NestedStruct) *AllTypesBuilder {
 	b.instance.StructMap = v
 	return b
 }
-func (b *AllTypesBuilder) SetIntChan(v chan int) *AllTypesBuilder {
+func (b *AllTypesBuilder) IntChan(v chan int) *AllTypesBuilder {
 	b.instance.IntChan = v
 	return b
 }
-func (b *AllTypesBuilder) SetSendChan(v chan<- string) *AllTypesBuilder {
+func (b *AllTypesBuilder) SendChan(v chan<- string) *AllTypesBuilder {
 	b.instance.SendChan = v
 	return b
 }
-func (b *AllTypesBuilder) SetReceiveChan(v <-chan bool) *AllTypesBuilder {
+func (b *AllTypesBuilder) ReceiveChan(v <-chan bool) *AllTypesBuilder {
 	b.instance.ReceiveChan = v
 	return b
 }
-func (b *AllTypesBuilder) SetNestedStruct(v NestedStruct) *AllTypesBuilder {
+func (b *AllTypesBuilder) NestedStruct(v NestedStruct) *AllTypesBuilder {
 	b.instance.NestedStruct = v
 	return b
 }
 
 func (b *AllTypesBuilder) Build() *AllTypes {
-	return &b.instance
+	return b.instance
 }
 
 type NestedStructBuilder struct {
-	instance NestedStruct
+	instance *NestedStruct
 }
 
 func NewNestedStructBuilder() *NestedStructBuilder {
 	return &NestedStructBuilder{
-		instance: NestedStruct{},
+		instance: &NestedStruct{},
 	}
 }
 
-func (b *NestedStructBuilder) SetField1(v string) *NestedStructBuilder {
+func (b *NestedStructBuilder) Field1(v string) *NestedStructBuilder {
 	b.instance.Field1 = v
 	return b
 }
-func (b *NestedStructBuilder) SetField2(v int) *NestedStructBuilder {
+func (b *NestedStructBuilder) Field2(v int) *NestedStructBuilder {
 	b.instance.Field2 = v
 	return b
 }
-func (b *NestedStructBuilder) SetField3(v *bool) *NestedStructBuilder {
+func (b *NestedStructBuilder) Field3(v *bool) *NestedStructBuilder {
 	b.instance.Field3 = v
 	return b
 }
 
 func (b *NestedStructBuilder) Build() *NestedStruct {
-	return &b.instance
+	return b.instance
 }
 
 type AddressBuilder struct {
-	instance Address
+	instance *Address
 }
 
 func NewAddressBuilder() *AddressBuilder {
 	return &AddressBuilder{
-		instance: Address{},
+		instance: &Address{},
 	}
 }
 
-func (b *AddressBuilder) SetStreet(v string) *AddressBuilder {
+func (b *AddressBuilder) Street(v string) *AddressBuilder {
 	b.instance.Street = v
 	return b
 }
-func (b *AddressBuilder) SetCity(v string) *AddressBuilder {
+func (b *AddressBuilder) City(v string) *AddressBuilder {
 	b.instance.City = v
 	return b
 }
-func (b *AddressBuilder) SetCountry(v string) *AddressBuilder {
+func (b *AddressBuilder) Country(v string) *AddressBuilder {
 	b.instance.Country = v
 	return b
 }
 
 func (b *AddressBuilder) Build() *Address {
-	return &b.instance
+	return b.instance
 }
 
 type ContactBuilder struct {
-	instance Contact
+	instance *Contact
 }
 
 func NewContactBuilder() *ContactBuilder {
 	return &ContactBuilder{
-		instance: Contact{},
+		instance: &Contact{},
 	}
 }
 
-func (b *ContactBuilder) SetEmail(v string) *ContactBuilder {
+func (b *ContactBuilder) Email(v string) *ContactBuilder {
 	b.instance.Email = v
 	return b
 }
-func (b *ContactBuilder) SetPhone(v *string) *ContactBuilder {
+func (b *ContactBuilder) Phone(v *string) *ContactBuilder {
 	b.instance.Phone = v
 	return b
 }
-func (b *ContactBuilder) SetAddress(v *Address) *ContactBuilder {
+func (b *ContactBuilder) Address(v *Address) *ContactBuilder {
 	b.instance.Address = v
 	return b
 }
-func (b *ContactBuilder) SetIsActive(v bool) *ContactBuilder {
+func (b *ContactBuilder) IsActive(v bool) *ContactBuilder {
 	b.instance.IsActive = v
 	return b
 }
 
 func (b *ContactBuilder) Build() *Contact {
-	return &b.instance
+	return b.instance
 }
 
 type UserProfileBuilder struct {
-	instance UserProfile
+	instance *UserProfile
 }
 
 func NewUserProfileBuilder() *UserProfileBuilder {
 	return &UserProfileBuilder{
-		instance: UserProfile{},
+		instance: &UserProfile{},
 	}
 }
 
-func (b *UserProfileBuilder) SetID(v int) *UserProfileBuilder {
+func (b *UserProfileBuilder) ID(v int) *UserProfileBuilder {
 	b.instance.ID = v
 	return b
 }
-func (b *UserProfileBuilder) SetName(v string) *UserProfileBuilder {
+func (b *UserProfileBuilder) Name(v string) *UserProfileBuilder {
 	b.instance.Name = v
 	return b
 }
-func (b *UserProfileBuilder) SetAge(v int) *UserProfileBuilder {
+func (b *UserProfileBuilder) Age(v int) *UserProfileBuilder {
 	b.instance.Age = v
 	return b
 }
-func (b *UserProfileBuilder) SetContacts(v []Contact) *UserProfileBuilder {
+func (b *UserProfileBuilder) Contacts(v []Contact) *UserProfileBuilder {
 	b.instance.Contacts = v
 	return b
 }
-func (b *UserProfileBuilder) SetMetadata(v map[string]interface{}) *UserProfileBuilder {
+func (b *UserProfileBuilder) Metadata(v map[string]interface{}) *UserProfileBuilder {
 	b.instance.Metadata = v
 	return b
 }
-func (b *UserProfileBuilder) SetSettings(v *map[string]string) *UserProfileBuilder {
+func (b *UserProfileBuilder) Settings(v *map[string]string) *UserProfileBuilder {
 	b.instance.Settings = v
 	return b
 }
-func (b *UserProfileBuilder) SetCreatedAt(v int64) *UserProfileBuilder {
+func (b *UserProfileBuilder) CreatedAt(v int64) *UserProfileBuilder {
 	b.instance.CreatedAt = v
 	return b
 }
-func (b *UserProfileBuilder) SetUpdatedAt(v *int64) *UserProfileBuilder {
+func (b *UserProfileBuilder) UpdatedAt(v *int64) *UserProfileBuilder {
 	b.instance.UpdatedAt = v
 	return b
 }
 
 func (b *UserProfileBuilder) Build() *UserProfile {
-	return &b.instance
+	return b.instance
+}
+
+type PersonBuilder struct {
+	instance *Person
+}
+
+func NewPersonBuilder() *PersonBuilder {
+	return &PersonBuilder{
+		instance: &Person{},
+	}
+}
+
+func (b *PersonBuilder) Name(v string) *PersonBuilder {
+	b.instance.Name = v
+	return b
+}
+func (b *PersonBuilder) Age(v int) *PersonBuilder {
+	b.instance.Age = v
+	return b
+}
+
+func (b *PersonBuilder) Build() *Person {
+	return b.instance
+}
+
+func CreatePerson(Name string, Age int) Person {
+	return Person{
+		Name: Name,
+		Age:  Age,
+	}
+}
+
+type EmployeeBuilder struct {
+	instance *Employee
+}
+
+func NewEmployeeBuilder() *EmployeeBuilder {
+	return &EmployeeBuilder{
+		instance: &Employee{},
+	}
+}
+
+func (b *EmployeeBuilder) ID(v int) *EmployeeBuilder {
+	b.instance.ID = v
+	return b
+}
+func (b *EmployeeBuilder) Title(v string) *EmployeeBuilder {
+	b.instance.Title = v
+	return b
+}
+func (b *EmployeeBuilder) Salary(v float64) *EmployeeBuilder {
+	b.instance.Salary = v
+	return b
+}
+
+func (b *EmployeeBuilder) Build() *Employee {
+	return b.instance
+}
+
+func NewEmployee(ID int, Title string, Salary float64) Employee {
+	return Employee{
+		ID:     ID,
+		Title:  Title,
+		Salary: Salary,
+	}
 }
 
 type SimpleBuilder struct {
-	instance Simple
+	instance *Simple
 }
 
 func NewSimpleBuilder() *SimpleBuilder {
 	return &SimpleBuilder{
-		instance: Simple{},
+		instance: &Simple{},
 	}
 }
 
-func (b *SimpleBuilder) SetName(v string) *SimpleBuilder {
+func (b *SimpleBuilder) Name(v string) *SimpleBuilder {
 	b.instance.Name = v
 	return b
 }
-func (b *SimpleBuilder) SetAge(v int) *SimpleBuilder {
+func (b *SimpleBuilder) Age(v int) *SimpleBuilder {
 	b.instance.Age = v
 	return b
 }
-func (b *SimpleBuilder) SetIsAdmin(v bool) *SimpleBuilder {
+func (b *SimpleBuilder) IsAdmin(v bool) *SimpleBuilder {
 	b.instance.IsAdmin = v
 	return b
 }
 
 func (b *SimpleBuilder) Build() *Simple {
-	return &b.instance
+	return b.instance
 }
 
 type UserBuilder struct {
-	instance User
+	instance *User
 }
 
 func NewUserBuilder() *UserBuilder {
 	return &UserBuilder{
-		instance: User{},
+		instance: &User{},
 	}
 }
 
-func (b *UserBuilder) SetName(v string) *UserBuilder {
+func (b *UserBuilder) Name(v string) *UserBuilder {
 	b.instance.Name = v
 	return b
 }
-func (b *UserBuilder) SetAge(v int) *UserBuilder {
+func (b *UserBuilder) Age(v int) *UserBuilder {
 	b.instance.Age = v
 	return b
 }
-func (b *UserBuilder) SetTags(v []string) *UserBuilder {
+func (b *UserBuilder) Tags(v []string) *UserBuilder {
 	b.instance.Tags = v
 	return b
 }
 
 func (b *UserBuilder) Build() *User {
-	return &b.instance
+	return b.instance
 }

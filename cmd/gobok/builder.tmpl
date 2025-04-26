@@ -24,7 +24,7 @@ func New{{ .BuilderName }}Builder() *{{ $structName }}Builder {
 }
 
 {{ range .Fields }}
-func (b *{{ $structName }}Builder) Set{{ .SetterName }}(v {{ .Type }}) *{{ $structName }}Builder {
+func (b *{{ $structName }}Builder) {{ .SetterName }}(v {{ .Type }}) *{{ $structName }}Builder {
 	b.instance.{{ .Name }} = v
 	return b
 }
@@ -36,8 +36,12 @@ func (b *{{ $structName }}Builder) Build() *{{ $structName }} {
 {{ end }}
 
 {{ if .GenerateConstructor }}
-func {{ if .ConstructorName }}{{ .ConstructorName }}{{ else }}New{{ .BuilderName }}{{ end }}() {{ .StructName }} {
-	return {{ .StructName }}{}
+func {{ if .ConstructorName }}{{ .ConstructorName }}{{ else }}New{{ .BuilderName }}{{ end }}({{- range $index, $field := .Fields }}{{ if $index }}, {{ end }}{{ $field.Name }} {{ $field.Type }}{{ end }}) {{ .StructName }} {
+	return {{ .StructName }}{
+		{{- range .Fields }}
+		{{ .Name }}: {{ .Name }},
+		{{- end }}
+	}
 }
 {{ end }}
 {{ end }}

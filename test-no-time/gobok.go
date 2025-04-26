@@ -3,40 +3,40 @@
 package main
 
 type PersonBuilder struct {
-	instance Person
+	instance *Person
 }
 
 func NewPersonBuilder() *PersonBuilder {
 	return &PersonBuilder{
-		instance: Person{},
+		instance: &Person{},
 	}
 }
 
-func (b *PersonBuilder) SetName(v string) *PersonBuilder {
+func (b *PersonBuilder) Name(v string) *PersonBuilder {
 	b.instance.Name = v
 	return b
 }
-func (b *PersonBuilder) SetAge(v int) *PersonBuilder {
+func (b *PersonBuilder) Age(v int) *PersonBuilder {
 	b.instance.Age = v
 	return b
 }
-func (b *PersonBuilder) SetIsActive(v bool) *PersonBuilder {
+func (b *PersonBuilder) IsActive(v bool) *PersonBuilder {
 	b.instance.IsActive = v
 	return b
 }
-func (b *PersonBuilder) SetTags(v []string) *PersonBuilder {
+func (b *PersonBuilder) Tags(v []string) *PersonBuilder {
 	b.instance.Tags = v
 	return b
 }
-func (b *PersonBuilder) SetMetadata(v map[string]interface{}) *PersonBuilder {
+func (b *PersonBuilder) Metadata(v map[string]interface{}) *PersonBuilder {
 	b.instance.Metadata = v
 	return b
 }
-func (b *PersonBuilder) SetParent(v *Person) *PersonBuilder {
+func (b *PersonBuilder) Parent(v *Person) *PersonBuilder {
 	b.instance.Parent = v
 	return b
 }
 
 func (b *PersonBuilder) Build() *Person {
-	return &b.instance
+	return b.instance
 }

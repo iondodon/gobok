@@ -8,18 +8,18 @@ import (
 func main() {
 	// Create an address
 	address := NewAddressBuilder().
-		SetStreet("123 Main St").
-		SetCity("New York").
-		SetCountry("USA").
+		Street("123 Main St").
+		City("New York").
+		Country("USA").
 		Build()
 
 	// Create a contact with the address
 	phone := "+1-555-1234"
 	contact := NewContactBuilder().
-		SetEmail("john@example.com").
-		SetPhone(&phone).
-		SetAddress(address).
-		SetIsActive(true).
+		Email("john@example.com").
+		Phone(&phone).
+		Address(address).
+		IsActive(true).
 		Build()
 
 	// Create settings map
@@ -37,14 +37,14 @@ func main() {
 	// Create a user profile with all the above
 	now := time.Now().Unix()
 	profile := NewUserProfileBuilder().
-		SetID(1).
-		SetName("John Doe").
-		SetAge(30).
-		SetContacts([]Contact{*contact}).
-		SetMetadata(metadata).
-		SetSettings(&settings).
-		SetCreatedAt(now).
-		SetUpdatedAt(&now).
+		ID(1).
+		Name("John Doe").
+		Age(30).
+		Contacts([]Contact{*contact}).
+		Metadata(metadata).
+		Settings(&settings).
+		CreatedAt(now).
+		UpdatedAt(&now).
 		Build()
 
 	// Print the results
@@ -64,9 +64,9 @@ func main() {
 
 	// Create a nested struct
 	nested := NewNestedStructBuilder().
-		SetField1("nested").
-		SetField2(123).
-		SetField3(&boolVal).
+		Field1("nested").
+		Field2(123).
+		Field3(&boolVal).
 		Build()
 
 	// Create channels
@@ -92,50 +92,50 @@ func main() {
 	// Create the all types instance
 	allTypes := NewAllTypesBuilder().
 		// Basic types
-		SetBoolValue(true).
-		SetIntValue(42).
-		SetInt8Value(8).
-		SetInt16Value(16).
-		SetInt32Value(32).
-		SetInt64Value(64).
-		SetUintValue(42).
-		SetUint8Value(8).
-		SetUint16Value(16).
-		SetUint32Value(32).
-		SetUint64Value(64).
-		SetFloat32Value(32.0).
-		SetFloat64Value(64.0).
-		SetStringValue("string").
-		SetByteValue('A').
-		SetRuneValue('世').
+		BoolValue(true).
+		IntValue(42).
+		Int8Value(8).
+		Int16Value(16).
+		Int32Value(32).
+		Int64Value(64).
+		UintValue(42).
+		Uint8Value(8).
+		Uint16Value(16).
+		Uint32Value(32).
+		Uint64Value(64).
+		Float32Value(32.0).
+		Float64Value(64.0).
+		StringValue("string").
+		ByteValue('A').
+		RuneValue('世').
 
 		// Pointer types
-		SetBoolPtr(&boolVal).
-		SetIntPtr(&intVal).
-		SetStringPtr(&stringVal).
-		SetStructPtr(nested).
+		BoolPtr(&boolVal).
+		IntPtr(&intVal).
+		StringPtr(&stringVal).
+		StructPtr(nested).
 
 		// Qualified types
-		SetTimeValue(time.Now()).
+		TimeValue(time.Now()).
 
 		// Array types
-		SetIntArray([]int{1, 2, 3}).
-		SetStringArray([]string{"one", "two", "three"}).
-		SetStructArray([]NestedStruct{*nested}).
+		IntArray([]int{1, 2, 3}).
+		StringArray([]string{"one", "two", "three"}).
+		StructArray([]NestedStruct{*nested}).
 
 		// Map types
-		SetSimpleMap(simpleMap).
-		SetComplexMap(complexMap).
-		SetInterfaceMap(interfaceMap).
-		SetStructMap(structMap).
+		SimpleMap(simpleMap).
+		ComplexMap(complexMap).
+		InterfaceMap(interfaceMap).
+		StructMap(structMap).
 
 		// Channel types
-		SetIntChan(intChan).
-		SetSendChan(sendChan).
-		SetReceiveChan(receiveChan).
+		IntChan(intChan).
+		SendChan(sendChan).
+		ReceiveChan(receiveChan).
 
 		// Nested struct
-		SetNestedStruct(*nested).
+		NestedStruct(*nested).
 		Build()
 
 	// Print the results
