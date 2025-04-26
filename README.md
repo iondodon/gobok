@@ -83,6 +83,34 @@ employee := NewEmployee(1, "Developer", 75000.0)
 user := CreateUser("Alice", "alice@example.com")
 ```
 
+## Development Experience
+
+### VSCode Configuration
+
+To hide generated files in VSCode's file explorer, add the following to your `settings.json`:
+
+```json
+{
+  "files.exclude": {
+    "**/gobok.go": true
+  }
+}
+```
+
+### Git Configuration
+
+To mark generated files as generated in Git, add the following to your `.gitattributes` file:
+
+```
+**/gobok.go linguist-generated=true
+```
+
+This will:
+
+- Hide the files in GitHub's language statistics
+- Skip them in GitHub's diffs by default
+- Mark them as generated in pull requests
+
 ## Generated Code Example
 
 For a struct like:
