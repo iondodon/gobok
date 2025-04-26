@@ -14,29 +14,29 @@ import (
 {{ if .GenerateBuilder }}
 {{ $structName := .StructName }}
 type {{ $structName }}Builder struct {
-	instance {{ $structName }}
+	instance *{{ $structName }}
 }
 
-func New{{ $structName }}Builder() *{{ $structName }}Builder {
+func New{{ .BuilderName }}Builder() *{{ $structName }}Builder {
 	return &{{ $structName }}Builder{
-		instance: {{ $structName }}{},
+		instance: &{{ $structName }}{},
 	}
 }
 
 {{ range .Fields }}
-func (b *{{ $structName }}Builder) Set{{ .Name }}(v {{ .Type }}) *{{ $structName }}Builder {
+func (b *{{ $structName }}Builder) Set{{ .SetterName }}(v {{ .Type }}) *{{ $structName }}Builder {
 	b.instance.{{ .Name }} = v
 	return b
 }
 {{- end }}
 
 func (b *{{ $structName }}Builder) Build() *{{ $structName }} {
-	return &b.instance
+	return b.instance
 }
 {{ end }}
 
 {{ if .GenerateConstructor }}
-func {{ if .ConstructorName }}{{ .ConstructorName }}{{ else }}New{{ .StructName }}{{ end }}() {{ .StructName }} {
+func {{ if .ConstructorName }}{{ .ConstructorName }}{{ else }}New{{ .BuilderName }}{{ end }}() {{ .StructName }} {
 	return {{ .StructName }}{}
 }
 {{ end }}

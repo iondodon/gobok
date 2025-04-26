@@ -18,6 +18,7 @@ const toolVersion = "v1.0.0"
 
 type BuilderData struct {
 	StructName          string
+	BuilderName         string // Capitalized version of StructName
 	Fields              []FieldData
 	GenerateBuilder     bool
 	GenerateConstructor bool
@@ -25,8 +26,9 @@ type BuilderData struct {
 }
 
 type FieldData struct {
-	Name string
-	Type string
+	Name       string
+	SetterName string // Capitalized version of Name
+	Type       string
 }
 
 type FolderData struct {
@@ -159,13 +161,15 @@ func processFile(path string) {
 		}
 
 		builder.StructName = typeSpec.Name.Name
+		builder.BuilderName = capitalizeFirst(builder.StructName)
 
 		for _, field := range structType.Fields.List {
 			for _, name := range field.Names {
 				fieldType := exprToString(field.Type)
 				builder.Fields = append(builder.Fields, FieldData{
-					Name: name.Name,
-					Type: fieldType,
+					Name:       name.Name,
+					SetterName: capitalizeFirst(name.Name),
+					Type:       fieldType,
 				})
 
 				// Track imports from field types
@@ -364,4 +368,11 @@ func exprToString(expr ast.Expr) string {
 	default:
 		return "interface{}"
 	}
+}
+
+func capitalizeFirst(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToUpper(string(s[0])) + s[1:]
 }
