@@ -32,10 +32,22 @@ type FieldData struct {
 type FolderData struct {
 	PackageName string
 	Builders    []BuilderData
-	Imports     map[string]bool // Track required imports
+	Imports     map[string]string // Track required imports with their full paths
 }
 
 var folders = make(map[string]*FolderData)
+
+type ImportData struct {
+	Alias string
+	Path  string
+}
+
+type TemplateData struct {
+	PackageName string
+	Builders    []BuilderData
+	ToolVersion string
+	Imports     []ImportData
+}
 
 func main() {
 	flag.Parse()
@@ -90,7 +102,19 @@ func processFile(path string) {
 	if folders[folder] == nil {
 		folders[folder] = &FolderData{
 			PackageName: node.Name.Name,
-			Imports:     make(map[string]bool),
+			Imports:     make(map[string]string),
+		}
+	}
+
+	// Create a map of original imports for reference
+	originalImports := make(map[string]string)
+	for _, imp := range node.Imports {
+		importPath := strings.Trim(imp.Path.Value, "\"")
+		if imp.Name != nil {
+			originalImports[imp.Name.Name] = importPath
+		} else {
+			parts := strings.Split(importPath, "/")
+			originalImports[parts[len(parts)-1]] = importPath
 		}
 	}
 
@@ -144,15 +168,66 @@ func processFile(path string) {
 					Type: fieldType,
 				})
 
-				// Track required imports
-				if strings.Contains(fieldType, "time.Time") {
-					folders[folder].Imports["time"] = true
+				// Track imports from field types
+				if strings.Contains(fieldType, ".") {
+					parts := strings.Split(fieldType, ".")
+					if len(parts) > 1 {
+						pkg := parts[0]
+						// Handle pointer types
+						if strings.HasPrefix(pkg, "*") {
+							pkg = pkg[1:]
+						}
+						// Handle array types
+						if strings.HasPrefix(pkg, "[]") {
+							pkg = pkg[2:]
+						}
+						// Handle map types
+						if strings.HasPrefix(pkg, "map[") {
+							pkg = strings.TrimPrefix(pkg, "map[")
+							pkg = strings.Split(pkg, "]")[0]
+						}
+						// Add the import if it's not a built-in type
+						if !isBuiltInType(pkg) {
+							// Try to find the import in the original imports
+							if importPath, exists := originalImports[pkg]; exists {
+								folders[folder].Imports[pkg] = importPath
+							}
+						}
+					}
 				}
 			}
 		}
 
 		folders[folder].Builders = append(folders[folder].Builders, builder)
 	}
+}
+
+// Helper function to check if a type is a built-in Go type
+func isBuiltInType(typeName string) bool {
+	builtInTypes := map[string]bool{
+		"bool":       true,
+		"string":     true,
+		"int":        true,
+		"int8":       true,
+		"int16":      true,
+		"int32":      true,
+		"int64":      true,
+		"uint":       true,
+		"uint8":      true,
+		"uint16":     true,
+		"uint32":     true,
+		"uint64":     true,
+		"uintptr":    true,
+		"byte":       true,
+		"rune":       true,
+		"float32":    true,
+		"float64":    true,
+		"complex64":  true,
+		"complex128": true,
+		"error":      true,
+		"interface":  true,
+	}
+	return builtInTypes[typeName]
 }
 
 func writeBuilders(folder string, data *FolderData) {
@@ -162,17 +237,24 @@ func writeBuilders(folder string, data *FolderData) {
 		return
 	}
 
-	type TemplateData struct {
-		PackageName string
-		Builders    []BuilderData
-		ToolVersion string
-		Imports     []string
-	}
+	// Convert imports map to slice of ImportData
+	imports := make([]ImportData, 0, len(data.Imports))
+	for alias, path := range data.Imports {
+		// Extract the last part of the path
+		parts := strings.Split(path, "/")
+		lastPart := parts[len(parts)-1]
 
-	// Convert imports map to sorted slice
-	imports := make([]string, 0, len(data.Imports))
-	for imp := range data.Imports {
-		imports = append(imports, imp)
+		// If the alias matches the last part of the path, we don't need an alias
+		if alias == lastPart {
+			imports = append(imports, ImportData{
+				Path: path,
+			})
+		} else {
+			imports = append(imports, ImportData{
+				Alias: alias,
+				Path:  path,
+			})
+		}
 	}
 
 	outData := TemplateData{
