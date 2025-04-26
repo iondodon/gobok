@@ -34,7 +34,8 @@ type FieldData struct {
 type FolderData struct {
 	PackageName string
 	Builders    []BuilderData
-	Imports     map[string]string // Track required imports with their full paths
+	Imports     map[string]string
+	HasBuilders bool // Track if this directory has any builders
 }
 
 var folders = make(map[string]*FolderData)
@@ -59,7 +60,14 @@ func main() {
 	}
 
 	for _, root := range roots {
-		err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+		// Get absolute path
+		absRoot, err := filepath.Abs(root)
+		if err != nil {
+			fmt.Printf("Error getting absolute path for %s: %v\n", root, err)
+			continue
+		}
+
+		err = filepath.WalkDir(absRoot, func(path string, d fs.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
@@ -105,6 +113,7 @@ func processFile(path string) {
 		folders[folder] = &FolderData{
 			PackageName: node.Name.Name,
 			Imports:     make(map[string]string),
+			HasBuilders: false,
 		}
 	}
 
@@ -138,11 +147,14 @@ func processFile(path string) {
 			switch {
 			case text == "//gobok:builder":
 				builder.GenerateBuilder = true
+				folders[folder].HasBuilders = true
 			case text == "//gobok:constructor":
 				builder.GenerateConstructor = true
+				folders[folder].HasBuilders = true
 			case strings.HasPrefix(text, "//gobok:constructor:name="):
 				builder.GenerateConstructor = true
 				builder.ConstructorName = strings.TrimPrefix(text, "//gobok:constructor:name=")
+				folders[folder].HasBuilders = true
 			}
 		}
 
@@ -235,6 +247,11 @@ func isBuiltInType(typeName string) bool {
 }
 
 func writeBuilders(folder string, data *FolderData) {
+	// Only write if there are builders in this directory
+	if !data.HasBuilders {
+		return
+	}
+
 	tmpl, err := template.New("builder").Parse(builderTemplate)
 	if err != nil {
 		fmt.Printf("Failed to parse template: %v\n", err)
