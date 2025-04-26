@@ -62,8 +62,10 @@ Run gobok on your project:
 
 ```bash
 gobok .     # Process project root and all subdirectories recursively
-gobok ./pkg # Process specific package
+gobok ./directory # Process specific directory
 ```
+
+The generated code will be placed in a file named `gobok.go` in the same directory as the source file containing the struct definitions.
 
 ### 3. Use Generated Code
 
