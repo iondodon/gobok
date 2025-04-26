@@ -16,6 +16,14 @@ gobok is a Go code generator that automatically generates builder patterns and c
 go install github.com/iondodon/gobok/cmd/gobok@latest
 ```
 
+> **Note**: Make sure your Go binary directory (`$HOME/go/bin` or `$GOPATH/bin`) is in your system's PATH. If the `gobok` command is not found after installation, add the following line to your shell configuration file (`.bashrc` or `.zshrc`):
+>
+> ```bash
+> export PATH=$PATH:$HOME/go/bin
+> ```
+>
+> Then restart your terminal or run `source ~/.bashrc` (or `source ~/.zshrc` for zsh) to apply the changes.
+
 ## Usage
 
 ### 1. Add Directives to Your Structs
